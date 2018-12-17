@@ -28,23 +28,24 @@ def render_note(note: str) -> str:
 
     """
     note = emojize(note)
-    note = markdown(note)
+    note = markdown(note, extensions=['nl2br'])
     return note
 
 
-def render_yaml_file(path: Path):
+def render_yaml_file(path: Path) -> None:
     """TODO: Docstring for render_yaml_file.
 
     :path: TODO
-    :returns: TODO
+    :returns: None
 
     """
+    # TODO: render newlines as separate paragraphs
     yaml: Dict = load(open(str(path)).read())
     yaml['note'] = render_note(yaml['note'])
-    render_file(path.stem, yaml)
+    render_page(path.stem, yaml)
 
 
-def render_file(path: str, info: Dict):
+def render_page(path: str, info: Dict, output: Path = None):
     """ creates the `dist` directory if not already there,
         and renders the card page into `dist/path/`
 
@@ -52,10 +53,12 @@ def render_file(path: str, info: Dict):
     :info: Dict: jinja2 context
 
     """
-    output: Path = Path('.') / 'dist' / path
+    if not output:
+        output = Path('.') / 'dist' / path
     makedirs(output, exist_ok=True)
+    tree: str = open('./template/assets/tree.svg', 'r').read()
     template: Template = Template(open('./template/index.html').read())
-    html: str = template.render(**info)
+    html: str = template.render(tree=tree, **info)
     with open(output / 'index.html', 'w') as f:
         f.write(html)
     print(path)
@@ -63,4 +66,5 @@ def render_file(path: str, info: Dict):
 
 
 paths: List[Path] = get_card_files()
-render_yaml_file(paths[0])
+for path in paths:
+    render_yaml_file(path)
