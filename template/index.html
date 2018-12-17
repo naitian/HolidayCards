@@ -14,7 +14,6 @@
 
         <link href="https://fonts.googleapis.com/css?family=Cardo|Noto+Serif+SC|Gloria+Hallelujah" rel="stylesheet">
         <link rel="stylesheet" href="/styles/card.css" type="text/css" media="screen" charset="utf-8">
-        <script src="/js/photos.js" charset="utf-8"></script>
     </head>
     <body>
         <div class="container">
@@ -35,13 +34,15 @@
                 {{ tree }}
             </div>
             {% for image in images %}
-            <div class="photo-card rotate-{{ range(-30, 35, 5) | random }}">
-                <div class="inner" draggable="true">
+            <div class="photo-card rotate-{{ range(-30, 35, 5) | random }}"
+                 style="transform: translate(0px, 0px)">
+                <div class="inner">
                     <img src="{{ image.url }}" alt="{{ image.caption }}"/>
                     <span class="caption">{{ image.caption }}</span>
                 </div>
             </div>
             {% endfor %}
         </div>
+        <script src="/js/photos.js" charset="utf-8"></script>
     </body>
 </html>

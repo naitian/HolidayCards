@@ -1,6 +1,7 @@
 .photo-card {
     filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.3));
     margin: 50px;
+    position: relative;
     grid-column: 2;
     grid-row: 3;
 
@@ -19,7 +20,7 @@
         font-size: 14px;
         font-family: "Gloria Hallelujah", Arial;
         line-height: 1;
-
+        pointer-events: none;
     }
 
     img {
