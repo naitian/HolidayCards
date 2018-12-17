@@ -60,7 +60,7 @@ def render_page(path: str, info: Dict, output: Path = None):
     card_template: Template = Template(open('./template/index.html').read())
     card_html: str = card_template.render(tree=tree, **info)
 
-    token: str = hashlib.sha256(card_html.encode('utf-8')).hexdigest()[:8]
+    token: str = hashlib.sha256(info['note'].encode('utf-8')).hexdigest()
     correct: str = hashlib.sha256(token.encode('utf-8')).hexdigest()
 
     auth_template: Template = Template(open('./template/auth.html').read())
