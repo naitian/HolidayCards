@@ -1,3 +1,4 @@
+import hashlib
 from typing import List, Dict
 from pathlib import Path
 from os import makedirs
@@ -55,14 +56,27 @@ def render_page(path: str, info: Dict, output: Path = None):
     """
     if not output:
         output = Path('.') / 'dist' / path
-    makedirs(output, exist_ok=True)
     tree: str = open('./template/assets/tree.svg', 'r').read()
-    template: Template = Template(open('./template/index.html').read())
-    html: str = template.render(tree=tree, **info)
+    card_template: Template = Template(open('./template/index.html').read())
+    card_html: str = card_template.render(tree=tree, **info)
+
+    token: str = hashlib.sha256(card_html.encode('utf-8')).hexdigest()[:8]
+    correct: str = hashlib.sha256(token.encode('utf-8')).hexdigest()
+
+    auth_template: Template = Template(open('./template/auth.html').read())
+    auth_html: str = auth_template.render(correct=correct)
+
+    makedirs(output, exist_ok=True)
     with open(output / 'index.html', 'w') as f:
-        f.write(html)
+        f.write(auth_html)
+
+    card_output = Path('.') / 'dist' / token
+    makedirs(card_output, exist_ok=True)
+    with open(card_output / 'index.html', 'w') as f:
+        f.write(card_html)
+
     print(path)
-    print(info)
+    print(token)
 
 
 paths: List[Path] = get_card_files()
