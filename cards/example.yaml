@@ -11,3 +11,4 @@ song: # link to mp3 that plays softly in the background
 images:
     - url: # link to photo
       motion_url: # link to video (that plays on hover)
+      caption: # witty caption
