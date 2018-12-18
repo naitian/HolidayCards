@@ -1,5 +1,5 @@
 import hashlib
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from pathlib import Path
 from os import makedirs
 
@@ -33,7 +33,7 @@ def render_note(note: str) -> str:
     return note
 
 
-def render_yaml_file(path: Path) -> None:
+def render_yaml_file(path: Path) -> Tuple[str, str]:
     """TODO: Docstring for render_yaml_file.
 
     :path: TODO
@@ -43,10 +43,10 @@ def render_yaml_file(path: Path) -> None:
     # TODO: render newlines as separate paragraphs
     yaml: Dict = load(open(str(path)).read())
     yaml['note'] = render_note(yaml['note'])
-    render_page(path.stem, yaml)
+    return render_page(path.stem, yaml)
 
 
-def render_page(path: str, info: Dict, output: Path = None):
+def render_page(path: str, info: Dict, output: Path = None) -> Tuple[str, str]:
     """ creates the `dist` directory if not already there,
         and renders the card page into `dist/path/`
 
@@ -75,10 +75,10 @@ def render_page(path: str, info: Dict, output: Path = None):
     with open(card_output / 'index.html', 'w') as f:
         f.write(card_html)
 
-    print(path)
-    print(token)
+    return (path, token)
 
 
 paths: List[Path] = get_card_files()
 for path in paths:
-    render_yaml_file(path)
+    url, token = render_yaml_file(path)
+    print('http://localhost:8001/{}?auth_token={}'.format(url, token))
