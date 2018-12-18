@@ -4,6 +4,9 @@ Each card has a .yaml file
 
 Filename is the url / subdomain (haven't figured that out yet).
 
+If you're using Google photos for the image URLs (like me, because I'm lazy),
+you want to make an album with all the photos in them and turn on link sharing.
+
 Example `person.yaml`:
 
 ```yaml
