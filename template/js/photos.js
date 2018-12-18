@@ -4,6 +4,7 @@ let el = null;
 
 function handleDragStart(e) {
   e.preventDefault();
+  if (!e.target.matches('.photo-card .inner')) return;
   el = e.target;
   if (e.type == 'touchstart') {
     startX = e.targetTouches[0].clientX;
@@ -47,6 +48,7 @@ function handleDrag(e) {
 
 function handleDragEnd(e) {
   e.preventDefault();
+  // if (!e.target.matches('.photo-card .inner')) return;
   startX = null;
   startY = null;
   el = null;
@@ -54,13 +56,13 @@ function handleDragEnd(e) {
 }
 
 console.log('Running Photo Script');
+document.body.addEventListener('mousedown', handleDragStart);
+document.body.addEventListener('touchstart', handleDragStart);
+document.body.addEventListener('mouseup', handleDragEnd);
+document.body.addEventListener('touchend', handleDragEnd);
 document.querySelectorAll('.photo-card .inner').forEach(v => {
   console.log(v);
-  v.addEventListener('mousedown', handleDragStart, true);
   v.addEventListener('mousemove', handleDrag, true);
-  v.addEventListener('mouseup', handleDragEnd, true);
-  v.addEventListener('touchstart', handleDragStart, true);
   v.addEventListener('touchmove', handleDrag, true);
-  v.addEventListener('touchend', handleDragEnd, true);
   // v.ondrag = handleDrag;
 });
