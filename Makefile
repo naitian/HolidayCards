@@ -23,6 +23,7 @@ run: clean css render.py dist/js/
 	python render.py
 	cp template/favicons/* dist/
 	cp -r template/js/* dist/js/
+	cp template/robot.txt dist/robot.txt
 
 prod: run
 
