@@ -1,4 +1,3 @@
-let mouseDown = false;
 let startX = startY = null;
 let el = null;
 
