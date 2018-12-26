@@ -11,6 +11,7 @@ Example `person.yaml`:
 
 ```yaml
 
+email: test@naitian.org
 name: Nathan Joe
 note: >
     Here is a note, with multiple lines. Write something meaningful

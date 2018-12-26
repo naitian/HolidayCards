@@ -1,0 +1,8 @@
+{
+    "Template": {
+        "TemplateName": "naitian-holiday_card",
+        "SubjectPart": "Happy Holidays, {{name}}",
+        "TextPart": "I'm glad you're a part of my life, {{name}}! Here's a little something for you: {{link}}",
+        "HtmlPart": "<h1>Happy Holidays, {{name}}</h1><br>I'm glad you're a part my life. Here's a little something for you this holiday season: <a href=\"{{link}}\">clickity click</a>"
+    }
+}

@@ -1,4 +1,5 @@
 import hashlib
+from json import dumps
 from typing import List, Dict, Tuple
 from pathlib import Path
 from os import makedirs
@@ -33,7 +34,7 @@ def render_note(note: str) -> str:
     return note
 
 
-def render_yaml_file(path: Path) -> Tuple[str, str]:
+def render_yaml_file(yaml: Dict) -> Tuple[str, str]:
     """TODO: Docstring for render_yaml_file.
 
     :path: TODO
@@ -41,7 +42,6 @@ def render_yaml_file(path: Path) -> Tuple[str, str]:
 
     """
     # TODO: render newlines as separate paragraphs
-    yaml: Dict = load(open(str(path)).read())
     yaml['note'] = render_note(yaml['note'])
     return render_page(path.stem, yaml)
 
@@ -78,7 +78,32 @@ def render_page(path: str, info: Dict, output: Path = None) -> Tuple[str, str]:
     return (path, token)
 
 
+def get_email_destination(name: str, email: str, link: str) -> Dict:
+    destination: Dict = {
+            "Destination": {
+                "ToAddresses": [email]
+                },
+            "ReplacementTemplateData": {
+                "name": name,
+                "link": link}
+            }
+    return destination
+
+
 paths: List[Path] = get_card_files()
+mail: Dict = {
+        "Source": "happy@naitian.holiday",
+        "Template": "naitian-holiday_card",
+        "ConfigurationSetName": "ConfigSet",
+        "Destinations": []
+    }
 for path in paths:
-    url, token = render_yaml_file(path)
-    print('http://localhost:8001/{}?auth_token={}'.format(url, token))
+    yaml: Dict = load(open(str(path)).read())
+    url, token = render_yaml_file(yaml)
+    link = 'https://naitian.holiday/{}/?auth_token='.format(url, token)
+    print(link)
+    destination: Dict = get_email_destination(name=yaml["name"],
+                                              email=yaml["email"],
+                                              link=link)
+    mail["Destinations"].append(destination)
+print(dumps(mail))
