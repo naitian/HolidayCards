@@ -1,5 +1,5 @@
 import hashlib
-from json import dumps
+from json import dumps, dump
 from typing import List, Dict, Tuple
 from pathlib import Path
 from os import makedirs
@@ -79,14 +79,16 @@ def render_page(path: str, info: Dict, output: Path = None) -> Tuple[str, str]:
 
 
 def get_email_destination(name: str, email: str, link: str) -> Dict:
+    data = {
+            "name": name,
+            "link": link
+            }
     destination: Dict = {
             "Destination": {
                 "ToAddresses": [email]
                 },
-            "ReplacementTemplateData": {
-                "name": name,
-                "link": link}
-            }
+            "ReplacementTemplateData": dumps(data)
+    }
     return destination
 
 
@@ -94,16 +96,23 @@ paths: List[Path] = get_card_files()
 mail: Dict = {
         "Source": "happy@naitian.holiday",
         "Template": "naitian-holiday_card",
-        "ConfigurationSetName": "ConfigSet",
-        "Destinations": []
+        "Destinations": [],
+        "DefaultTemplateData": dumps({
+            "name": "friend",
+            "link": "#"
+        })
     }
+test_mail: Dict = mail
 for path in paths:
     yaml: Dict = load(open(str(path)).read())
     url, token = render_yaml_file(yaml)
-    link = 'https://naitian.holiday/{}/?auth_token='.format(url, token)
+    link = 'http://naitian.holiday/{}/?auth_token={}'.format(url, token)
     print(link)
     destination: Dict = get_email_destination(name=yaml["name"],
                                               email=yaml["email"],
                                               link=link)
     mail["Destinations"].append(destination)
-print(dumps(mail))
+    destination["Destination"]["ToAddresses"] = ["test-holiday@naitian.org"]
+    test_mail["Destinations"].append(destination)
+dump(mail, open('./mail/bulk_templated_email.json', 'w'))
+dump(test_mail, open('./mail/test_bulk_templated_email.json', 'w'))
