@@ -3,6 +3,7 @@ from json import dumps, dump
 from typing import List, Dict, Tuple
 from pathlib import Path
 from os import makedirs
+from copy import deepcopy
 
 from yaml import load
 from markdown import markdown
@@ -94,7 +95,7 @@ def get_email_destination(name: str, email: str, link: str) -> Dict:
 
 paths: List[Path] = get_card_files()
 mail: Dict = {
-        "Source": "happy@naitian.holiday",
+        "Source": "Naitian (Holiday Edition) <happy@naitian.holiday>",
         "Template": "naitian-holiday_card",
         "Destinations": [],
         "DefaultTemplateData": dumps({
@@ -102,7 +103,7 @@ mail: Dict = {
             "link": "#"
         })
     }
-test_mail: Dict = mail
+test_mail: Dict = deepcopy(mail)
 for path in paths:
     yaml: Dict = load(open(str(path)).read())
     url, token = render_yaml_file(yaml)
@@ -112,7 +113,9 @@ for path in paths:
                                               email=yaml["email"],
                                               link=link)
     mail["Destinations"].append(destination)
-    destination["Destination"]["ToAddresses"] = ["test-holiday@naitian.org"]
-    test_mail["Destinations"].append(destination)
+    test_dest = deepcopy(destination)
+    test_dest["Destination"]["ToAddresses"] = ["test-holiday@naitian.org"]
+    test_mail["Destinations"].append(test_dest)
+
 dump(mail, open('./mail/bulk_templated_email.json', 'w'))
 dump(test_mail, open('./mail/test_bulk_templated_email.json', 'w'))
