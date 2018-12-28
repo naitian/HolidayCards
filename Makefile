@@ -37,7 +37,7 @@ run: clean css render.py dist/js/
 prod: run
 	aws s3 sync ./dist/ s3://naitian.holiday/
 
-test-mail: run
+test-mail: prod
 	echo "Sending test email"
 	aws ses send-bulk-templated-email --cli-input-json file://mail/test_bulk_templated_email.json --region us-east-1
 
