@@ -16,6 +16,7 @@ function check_token(token) {
   let correct = document.querySelector('input.correct').value;
   if (h(token) === correct) {
     window.localStorage.setItem('token', token);
+    window.history.replaceState({}, document.title, window.location.pathname);
     loadContent(token);
   } else {
     document.body.innerText = "You're not who you say you are!";
