@@ -1,0 +1,48 @@
+{# Base #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Happy Holidays, {{ name }}!</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#ec552f">
+        <meta name="theme-color" content="#ffffff">
+
+        <link href="https://fonts.googleapis.com/css?family=Cardo|Noto+Serif+SC|Gloria+Hallelujah" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/card.css" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div class="container">
+            <div class="message">
+                <h1>
+                    Hey {{ name }}, <br>
+                    Happy Holidays!
+                </h1>
+                <div class="note">
+                    {{ note }}
+                    <p>
+                        {{ signoff }}</br>
+                        Naitian
+                    </p>
+                </div>
+            </div>
+            <div class="tree">
+                {{ tree }}
+            </div>
+            {% for image in images %}
+            <div class="photo-card rotate-{{ range(-30, 35, 5) | random }}"
+                 style="transform: translate(0px, 0px)">
+                <div class="inner">
+                    <img src="{{ image.url }}" alt="{{ image.caption }}"/>
+                    <span class="caption">{{ image.caption }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <script src="/js/photos.js" charset="utf-8"></script>
+    </body>
+</html>

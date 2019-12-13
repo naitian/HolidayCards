@@ -1,0 +1,49 @@
+@import 'photo';
+
+* {
+    color: white;
+    font-size: 18px;
+}
+
+body {
+    background-image: linear-gradient(#FF445D, #FF2D46 100%);
+
+    margin: 0;
+    min-height: 100vh;
+}
+
+h1 {
+    font-family: 'Noto Serif SC', Georgia;
+    line-height: 1.7;
+    font-size: 2rem;
+}
+
+.note {
+    font-family: Cardo, Georgia;
+    line-height: 1.7;
+
+    br {
+        margin-top: 1rem;
+        display: block;
+        content: "";
+    }
+}
+
+.message {
+    grid-column: 4;
+    grid-row: 2;
+    font-size: 1rem;
+}
+
+.tree {
+    grid-column: 2;
+    grid-row: 2;
+    width: 80%;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: 50px auto;
+    grid-template-columns: 1fr 280px 60px 360px 1fr;
+
+}
