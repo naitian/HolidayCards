@@ -9,7 +9,16 @@ note: >
     interpreted as a new paragraph.
 signoff: Best, # comma needs to be here
 song: # link to mp3 that plays softly in the background
-images:
-    - url: # link to photo
-      motion_url: # link to video (that plays on hover)
-      caption: # witty caption
+places:
+    - url: https://images.unsplash.com/photo-1523895665936-7bfe172b757d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80
+      caption: >
+        This is that time we went to go do that thing # witty caption
+      location: Ann Arbor
+      lat: 42
+      lng: -83
+    - url: #
+      caption: >
+        This other thing that happened was really great!
+      location: #
+      lat: #
+      lng: #

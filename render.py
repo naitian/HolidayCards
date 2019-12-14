@@ -2,7 +2,7 @@ import hashlib
 from json import dumps, dump
 from typing import List, Dict, Tuple
 from pathlib import Path
-from os import makedirs
+from os import makedirs, listdir
 from copy import deepcopy
 
 from yaml import load
@@ -57,9 +57,15 @@ def render_page(path: str, info: Dict, output: Path = None) -> Tuple[str, str]:
     """
     if not output:
         output = Path('.') / 'dist' / path
-    tree: str = open('./template/assets/tree.svg', 'r').read()
+    # Import SVGs
+    svgs = dict()
+    for filename in listdir('./template/assets/'):
+        if filename[-4:] != ".svg":
+            continue
+        svgs[filename[:-4]] = open(Path('./template/assets') / filename, 'r').read()
+    # tree: str = open('./template/assets/tree.svg', 'r').read()
     card_template: Template = Template(open('./template/index.html').read())
-    card_html: str = card_template.render(tree=tree, **info)
+    card_html: str = card_template.render(svgs=svgs, json=dumps(info), **info)
 
     token: str = hashlib.sha256(info['note'].encode('utf-8')).hexdigest()
     correct: str = hashlib.sha256(token.encode('utf-8')).hexdigest()
