@@ -4,6 +4,9 @@
 
 This is the holiday card system I used for my 2018 holiday cards.
 
+Read the writeup about how it works
+[here](https://naitian.org/blog/2019/07/07/Merry-Belated-Christmas/).
+
 ## Features
 
 - Each card is stored as a YAML file
