@@ -34,6 +34,9 @@ run: clean css render.py dist/js/
 	cp -r template/js/* dist/js/
 	cp template/robots.txt dist/robots.txt
 
+dev: run
+	open http://localhost:8000/example/?auth_token=ecee1ff27e127251bee2e2c9e274504d949a7154ca5e9d7b4e199aa73f70866a
+
 prod: run
 	aws s3 sync ./dist/ s3://naitian.holiday/
 
