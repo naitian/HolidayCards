@@ -24,7 +24,9 @@
             <h1>
                 Home is where your friends are.
             </h1>
-            <p>Happy holidays, {{ name }}! Keep scrolling &mdash; let's take a trip.</p>
+            <p class="tagline">Happy holidays, {{ name }}! Keep scrolling &mdash; let's take a trip.</p>
+            <div class="map-observer">
+            </div>
             <figure class="map">
                 <canvas width="800px" height="500px"></canvas>
             </figure>
@@ -39,8 +41,8 @@
 
             </div>
             {% endfor %}
-            <div class="wrapup">
-                {{ note }} <br>
+            <div class="wrapup step">
+                {{ note }}
                 {{ signoff }} <br>
                 Naitian
             </div>
