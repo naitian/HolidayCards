@@ -1,0 +1,56 @@
+{# Base #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Happy Holidays, {{ name }}!</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <meta name="msapplication-TileColor" content="#ec552f">
+        <meta name="theme-color" content="#ffffff">
+
+        <link href="https://fonts.googleapis.com/css?family=Calistoga&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cardo|Noto+Serif+SC|Gloria+Hallelujah" rel="stylesheet">
+        <link rel="stylesheet" href="/styles/card.css" type="text/css" media="screen" charset="utf-8">
+        <script charset="utf-8">
+            window.places = {{ places | tojson | safe }}
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>
+                Home is where your friends are.
+            </h1>
+            <p class="tagline">Happy holidays, {{ name }}! Keep scrolling &mdash; let's take a trip.</p>
+            <div class="map-observer">
+            </div>
+            <figure class="map">
+                <canvas width="800px" height="500px"></canvas>
+            </figure>
+            {% for place in places %}
+            <div class="step" data-step="{{ loop.index0 }}">
+                <div class="caption">
+                {{ place.caption }}
+                </div>
+                {% if place.url %}
+                <img src="{{ place.url }}" class="photo"/>
+                {% endif %}
+
+            </div>
+            {% endfor %}
+            <div class="wrapup step">
+                {{ note }}
+                {{ signoff }} <br>
+                Naitian
+            </div>
+        </div>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+        <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+        <script src="https://unpkg.com/scrollama"></script>
+        <script src="/js/whereintheworld.js" charset="utf-8"></script>
+    </body>
+</html>
